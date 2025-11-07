@@ -12,7 +12,6 @@ class ReservationAPIController
 {
     public function reserve(Request $request)
     {
-
         // 1. validation
         $data = $request->validate([
             'title' => 'required|string',

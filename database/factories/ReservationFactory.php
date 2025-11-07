@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Reservation;
 use App\Models\Vessel;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 /**
  * @extends Factory<Reservation>
@@ -16,14 +16,19 @@ class ReservationFactory extends Factory
 
     public function definition(): array
     {
+        // Generate a coherent window where end_at is after start_at
+        $start = $this->faker->dateTimeBetween('+1 days', '+2 days');
+        $durationHours = $this->faker->numberBetween(1, 4);
+        $end = (clone $start)->modify("+{$durationHours} hours");
+
         return [
-            'title' => $this->faker->unique()->word(),
-            'description' => $this->faker->unique()->words(10),
+            'title' => $this->faker->unique()->sentence(3),
+            'description' => $this->faker->sentence(8),
             'vessel_id' => Vessel::factory(),
-            'start_at' => $this->faker->dateTimeBetween('+1 days', '+2 days'),
-            'end_at' => '',
-            'required_equipment' => '',
-            'status' => $this->faker->randomElement([20, 25, 30, 35, 40]),
+            'start_at' => $start,
+            'end_at' => $end,
+            'required_equipment' => [],
+            'status' => 'scheduled',
         ];
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\MaintenanceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\VesselController;
@@ -24,3 +25,10 @@ Route::prefix('reservations')->name('reservations.')->group(function () {
 
     Route::get('/{reservation}', [ReservationController::class, 'show'])->name('show');
 });
+
+// Maintenances routes grouped
+Route::prefix('maintenances')->name('maintenances.')->group(function () {
+    Route::get('/', [MaintenanceController::class, 'index'])->name('index');
+    Route::get('/{maintenance}', [MaintenanceController::class, 'show'])->name('show');
+});
+

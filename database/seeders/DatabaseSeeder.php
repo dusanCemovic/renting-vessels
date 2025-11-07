@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Vessel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,14 +14,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-        $vassels = Vessel::all();
-        foreach ($vassels as $vassel) {
-            $teamCount = rand(6, 8);
-            Task::factory()->count($teamCount)->create([
-                'vassel_id' => $vassel->id,
-            ]);
-        }
-        $this->call(VesselSeeder::class);
+        // Seed base data first
+        $this->call([
+            EquipmentSeeder::class,
+            VesselSeeder::class,
+            ReservationSeeder::class,
+            MaintenanceSeeder::class,
+        ]);
     }
 }

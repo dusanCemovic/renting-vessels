@@ -2,19 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VesselFilterRequest;
 use App\Models\Reservation;
-use App\Models\Task;
 use App\Models\Vessel;
+use App\Services\Repository;
 use App\Services\VesselReservation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReservationController
 {
+    public function index(VesselFilterRequest $request) {
+        // cleared type, sort and dit
+        $filters = $request->validatedFilters();
 
-    public function index() {
-        $tasks = Reservation::with('vessel')->orderByDesc('start_at')->get();
-        return view('reservations.index', compact('tasks'));
+        // get reservations
+        $reservations = Repository::getReservations();
+
+        // sort them based on params
+        $reservations = Repository::sort($reservations, $filters['sort'], $filters['dir']);
+
+        return view('reservations.index', [
+            'tasks' => $reservations,
+            'filters' => [
+                'sort' => $filters['sort'],
+                'dir' => $filters['dir'],
+            ],
+        ]);
     }
 
     public function show(Reservation $reservation)
@@ -25,7 +39,7 @@ class ReservationController
     public function create()
     {
         $vessels = Vessel::with('equipment')->get();
-        return view('reserve.form', compact('vessels'));
+        return view('reservations.create', compact('vessels'));
     }
 
     public function store(Request $request)
@@ -60,7 +74,7 @@ class ReservationController
                 'required_equipment' => $required,
             ]);
 
-            return view('reserve.result', [
+            return view('reservations.result', [
                 'success' => true,
                 'task' => $task,
                 'vessel' => $vessel
@@ -70,27 +84,10 @@ class ReservationController
         // if not, continue with reservations
         $suggestions = VesselReservation::getSuggestions($vessels, $start, $end);
 
-        return view('reserve.result', [
+        return view('reservations.result', [
             'success' => false,
             'suggestions' => $suggestions
         ]);
-    }
-
-    public function vesselTasksView($vesselId)
-    {
-        $vessel = Vessel::with(['tasks' => function ($q) {
-            $q->orderBy('start_at', 'desc');
-        }])->findOrFail($vesselId);
-
-        return view('tasks', compact('vessel'));
-    }
-
-    public function viewAllVessels()
-    {
-        // Load all vessels with equipment
-        $vessels = \App\Models\Vessel::with('equipment')->get();
-
-        return view('vessels.index', compact('vessels'));
     }
 
 }
