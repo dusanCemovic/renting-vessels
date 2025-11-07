@@ -1,43 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Reserve a Vessel</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="p-4">
-<div class="container">
+<x-layout title="Reserve a Vessel">
+    <h1 class="text-2xl font-semibold">Reserve a Vessel</h1>
 
-    <x-menu />
-
-    <h1>Reserve a Vessel</h1>
-
-    <form action="{{ route('reserve.submit') }}" method="POST" class="mt-4">
+    <form action="{{ route('reservations.store') }}" method="POST" class="mt-6 space-y-4 max-w-xl">
         @csrf
-        <div class="mb-3">
-            <label class="form-label">Title</label>
-            <input type="text" name="title" class="form-control" value="{{ old('title') }}" required>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Title</label>
+            <input type="text" name="title" class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" value="{{ old('title') }}" required>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Start At</label>
-            <input type="datetime-local" name="start_at" class="form-control" value="{{ old('start_at') }}" required>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Start At</label>
+            <input type="datetime-local" name="start_at" class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" value="{{ old('start_at') }}" required>
         </div>
-        <div class="mb-3">
-            <label class="form-label">End At</label>
-            <input type="datetime-local" name="end_at" class="form-control" value="{{ old('end_at') }}" required>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">End At</label>
+            <input type="datetime-local" name="end_at" class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" value="{{ old('end_at') }}" required>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Required Equipment</label>
-            <select name="required_equipment[]" class="form-select" multiple>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Required Equipment</label>
+            <select name="required_equipment[]" class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" multiple>
                 @foreach($vessels as $vessel)
                     @foreach($vessel->equipment as $equip)
                         <option value="{{ $equip->code }}">{{ $equip->name }} ({{ $equip->code }})</option>
                     @endforeach
                 @endforeach
             </select>
+            <p class="mt-1 text-xs text-gray-500">Hold Ctrl/Cmd to select multiple.</p>
         </div>
-        <button class="btn btn-primary" type="submit">Reserve</button>
+        <button class="inline-flex items-center rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700" type="submit">Reserve</button>
     </form>
-</div>
-</body>
-</html>
+</x-layout>

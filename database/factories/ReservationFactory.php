@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Task;
+use App\Models\Reservation;
 use App\Models\Vessel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends Factory<Task>
+ * @extends Factory<Reservation>
  */
-class TaskFactory extends Factory
+class ReservationFactory extends Factory
 {
-    protected $model = Task::class;
+    protected $model = Reservation::class;
 
     public function definition(): array
     {

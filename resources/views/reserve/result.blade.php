@@ -1,39 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Reservation Result</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="p-4">
-<div class="container">
-
-    <x-menu />
-
-    <h1>Reservation Result</h1>
+<x-layout title="Reservation Result">
+    <h1 class="text-2xl font-semibold">Reservation Result</h1>
 
     @if($success)
-        <div class="alert alert-success">
-            Task "<strong>{{ $task->title }}</strong>" successfully reserved for vessel "<strong>{{ $vessel->name }}</strong>".
+        <div class="mt-4 rounded border border-green-300 bg-green-50 text-green-800 px-4 py-3">
+            Task <strong>{{ $task->title }}</strong> successfully reserved for vessel <strong>{{ $vessel->name }}</strong>.
         </div>
-        <ul>
+        <ul class="mt-4 list-disc pl-6 text-sm text-gray-700">
             <li>Start: {{ \Carbon\Carbon::parse($task->start_at)->format('Y-m-d H:i') }}</li>
             <li>End: {{ \Carbon\Carbon::parse($task->end_at)->format('Y-m-d H:i') }}</li>
             <li>Required Equipment: {{ implode(', ', $task->required_equipment ?? []) }}</li>
         </ul>
     @else
-        <div class="alert alert-warning">
+        <div class="mt-4 rounded border border-yellow-300 bg-yellow-50 text-yellow-800 px-4 py-3">
             No vessel available at requested time.
         </div>
-        <h5>Suggestions:</h5>
-        <ul>
+        <h2 class="mt-6 font-semibold">Suggestions:</h2>
+        <ul class="mt-2 list-disc pl-6 text-sm text-gray-700">
             @foreach($suggestions as $s)
                 <li>Vessel: {{ $s['vessel_name'] }} — Available from: {{ $s['available_from'] }}</li>
             @endforeach
         </ul>
     @endif
 
-    <a href="{{ route('reserve.form') }}" class="btn btn-secondary mt-3">Back to Form</a>
-</div>
-</body>
-</html>
+    <a href="{{ route('reservations.create') }}" class="mt-6 inline-flex items-center rounded bg-gray-700 px-4 py-2 text-white hover:bg-gray-800">Back to Form</a>
+</x-layout>

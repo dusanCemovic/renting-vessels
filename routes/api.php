@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ReservationAPIController;
 
-Route::post('/reserve', [ReservationController::class,'reserve']);
-Route::get('/vessels/{id}/tasks', [ReservationController::class,'vesselTasks']);
-Route::post('/vessels/{id}/maintenance', [ReservationController::class,'addMaintenance']);
+Route::post('/reserve', [ReservationAPIController::class,'reserve']);
+Route::get('/vessels/{id}/tasks', [ReservationAPIController::class,'vesselTasks']);
+Route::post('/vessels/{id}/maintenance', [ReservationAPIController::class,'addMaintenance']);

@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Vessel;
 use Illuminate\Database\Seeder;
-use App\Models\Task;
+use App\Models\Reservation;
 use Illuminate\Support\Carbon;
 
-class TaskSeeder extends Seeder
+class ReservationSeeder extends Seeder
 {
     public function run()
     {

@@ -16,9 +16,9 @@ class Vessel extends Model
         return $this->belongsToMany(Equipment::class, 'equipment_vessel');
     }
 
-    public function tasks()
+    public function reservations()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Reservation::class);
     }
 
     public function maintenances()
