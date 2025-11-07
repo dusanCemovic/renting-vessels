@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Models\Task;
 use App\Models\Vessel;
 use App\Services\VesselReservation;
 use Carbon\Carbon;
@@ -47,8 +48,8 @@ class ReservationController
         // get available vessels in that period
         $available = VesselReservation::checkAvailability($vessels, $start, $end);
 
-        // if we have, then create task
-        if (empty(!$available)) {
+        // if we have available vessels, then create task
+        if (!empty($available)) {
             $vessel = $available[0];
             $task = Reservation::create([
                 'title' => $data['title'],

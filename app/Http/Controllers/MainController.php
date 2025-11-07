@@ -6,6 +6,6 @@ class MainController
 {
     public function index()
     {
-        return redirect('reservations');
+        return to_route('reservations.index');
     }
 }

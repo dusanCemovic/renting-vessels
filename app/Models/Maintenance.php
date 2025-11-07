@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Maintenance extends Model
 {
@@ -16,7 +17,7 @@ class Maintenance extends Model
         'end_at' => 'datetime',
     ];
 
-    public function vessel()
+    public function vessel() : BelongsTo
     {
         return $this->belongsTo(Vessel::class);
     }

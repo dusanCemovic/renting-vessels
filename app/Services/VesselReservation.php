@@ -10,6 +10,7 @@ final class VesselReservation
 
     public static function getVesselsWithEquipment($required)
     {
+//        return Vessel::with(['equipment', 'reservations', 'maintenances'])
         return Vessel::with('equipment')
             ->get()
             ->filter(function ($ves) use ($required) {
@@ -26,16 +27,12 @@ final class VesselReservation
             $conflictTasks = false;
             $conflictMaintenance = false;
 
-            // Check task conflicts
-            foreach ($itemVessel->tasks as $task) {
-
+            // Check reservation conflicts
+            foreach ($itemVessel->reservations as $res) {
                 if (
-                    // Task start or end within range
-                    (($task->start_at >= $start && $task->start_at <= $end) ||
-                        ($task->end_at >= $start && $task->end_at <= $end)) ||
-
-                    // Around
-                    ($task->start_at < $start && $task->end_at > $end)
+                    (($res->start_at >= $start && $res->start_at <= $end) ||
+                        ($res->end_at >= $start && $res->end_at <= $end)) ||
+                    ($res->start_at < $start && $res->end_at > $end)
                 ) {
                     $conflictTasks = true;
                     break;
@@ -78,12 +75,12 @@ final class VesselReservation
 
             $busy = array();
 
-            // tasks
-            foreach ($itemVessel->tasks as $task) {
-                if ($task->end_at >= $now) {
+            // reservations
+            foreach ($itemVessel->reservations as $res) {
+                if ($res->end_at >= $now) {
                     $busy[] = array(
-                        'start' => Carbon::parse($task->start_at),
-                        'end' => Carbon::parse($task->end_at),
+                        'start' => Carbon::parse($res->start_at),
+                        'end' => Carbon::parse($res->end_at),
                     );
                 }
             }
@@ -117,7 +114,6 @@ final class VesselReservation
 
             // iterate busy intervals and try to put inside of them
             foreach ($busy as $interval) {
-                var_dump($interval['start']->format('F j, Y, g:i A'));
                 // if we find before
                 if ($tryStart->copy()->lte($interval['start'])) {
                     $tryEnd = $tryStart->copy()->addSeconds($end->diffInSeconds($start));

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vessel extends Model
 {
@@ -11,17 +13,17 @@ class Vessel extends Model
 
     protected $fillable = ['name','type','size'];
 
-    public function equipment()
+    public function equipment() : BelongsToMany
     {
         return $this->belongsToMany(Equipment::class, 'equipment_vessel');
     }
 
-    public function reservations()
+    public function reservations() : HasMany
     {
         return $this->hasMany(Reservation::class);
     }
 
-    public function maintenances()
+    public function maintenances() : HasMany
     {
         return $this->hasMany(Maintenance::class);
     }
