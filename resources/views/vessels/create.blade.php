@@ -15,17 +15,17 @@
         @csrf
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div class="sm:col-span-2">
-                <label class="block text-sm font-medium text-gray-700">Name</label>
-                <input name="name" value="{{ old('name') }}" class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+                <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <input name="name" value="{{ old('name') }}" class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700">Size</label>
-                <input type="number" min="1" name="size" value="{{ old('size', 1) }}" class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+                <label class="block text-sm font-medium text-gray-700 mb-1">Size</label>
+                <input type="number" min="1" name="size" value="{{ old('size', 1) }}" class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
             </div>
         </div>
         <div class="sm:col-span-1">
-            <label class="block text-sm font-medium text-gray-700">Type</label>
-            <input name="type" value="{{ old('type') }}" class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+            <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+            <input name="type" value="{{ old('type') }}" class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
         </div>
 
         <div>

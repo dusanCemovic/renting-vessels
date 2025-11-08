@@ -10,20 +10,20 @@
 
     <form method="GET" class="mt-4 flex flex-wrap items-end gap-4">
         <div>
-            <label class="block text-sm font-medium text-gray-700">Sort by</label>
-            <select name="sort" class="mt-1 block w-48 rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Sort by</label>
+            <select name="sort" class="mt-1 block w-48 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <option value="code" {{ ($sort ?? 'code') === 'code' ? 'selected' : '' }}>Code</option>
                 <option value="name" {{ ($sort ?? 'code') === 'name' ? 'selected' : '' }}>Name</option>
             </select>
         </div>
         <div>
-            <label class="block text-sm font-medium text-gray-700">Direction</label>
-            <select name="dir" class="mt-1 block w-32 rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Direction</label>
+            <select name="dir" class="mt-1 block w-32 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <option value="asc" {{ ($dir ?? 'asc') === 'asc' ? 'selected' : '' }}>Asc</option>
                 <option value="desc" {{ ($dir ?? 'asc') === 'desc' ? 'selected' : '' }}>Desc</option>
             </select>
         </div>
-        <div class="mb-1">
+        <div>
             <button class="inline-flex items-center rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700" type="submit">Apply</button>
         </div>
     </form>

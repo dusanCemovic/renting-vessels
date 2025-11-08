@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VesselTaskFilterRequest;
+use App\Models\Equipment;
 use App\Models\Reservation;
 use App\Models\Vessel;
 use App\Services\Repository;
@@ -38,8 +39,9 @@ class ReservationController
 
     public function create()
     {
-        $vessels = Vessel::with('equipment')->get();
-        return view('reservations.create', compact('vessels'));
+        $equipments = Equipment::query()
+            ->orderBy('equipment.name', 'asc')->get();
+        return view('reservations.create', compact('equipments'));
     }
 
     public function store(Request $request)

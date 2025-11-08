@@ -8,9 +8,9 @@
 <form method="GET" class="mt-4 flex flex-wrap items-end gap-4">
     @if($showTypeFilter)
         <div>
-            <label class="block text-sm font-medium text-gray-700">Show</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Show</label>
             <select name="type"
-                    class="mt-1 block w-48 rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    class="mt-1 block w-48 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <option value="both" {{ ($filters['type'] ?? 'both') === 'both' ? 'selected' : '' }}>Both</option>
                 <option value="reservations" {{ ($filters['type'] ?? 'both') === 'reservations' ? 'selected' : '' }}>
                     Reservations
@@ -22,9 +22,9 @@
         </div>
     @endif
     <div>
-        <label class="block text-sm font-medium text-gray-700">Sort by</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Sort by</label>
         <select name="sort"
-                class="mt-1 block w-48 rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                class="mt-1 block w-48 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500">
             <option value="start" {{ ($filters['sort'] ?? 'start') === 'start' ? 'selected' : '' }}>Start time</option>
             <option value="end" {{ ($filters['sort'] ?? 'start') === 'end' ? 'selected' : '' }}>End time</option>
             <option value="vessel" {{ ($filters['sort'] ?? 'start') === 'vessel' ? 'selected' : '' }}>Vessel</option>
@@ -34,14 +34,14 @@
         </select>
     </div>
     <div>
-        <label class="block text-sm font-medium text-gray-700">Direction</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Direction</label>
         <select name="dir"
-                class="mt-1 block w-32 rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                class="mt-1 block w-32 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500">
             <option value="asc" {{ ($filters['dir'] ?? 'desc') === 'asc' ? 'selected' : '' }}>Asc</option>
             <option value="desc" {{ ($filters['dir'] ?? 'desc') === 'desc' ? 'selected' : '' }}>Desc</option>
         </select>
     </div>
-    <div class="mb-1">
+    <div class="">
         <button class="inline-flex items-center rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
                 type="submit">Apply
         </button>

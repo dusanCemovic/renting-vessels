@@ -15,17 +15,17 @@
         @csrf
         @method('PUT')
         <div>
-            <label class="block text-sm font-medium text-gray-700">Code</label>
-            <input value="{{ $equipment->code }}" class="mt-1 block w-full rounded border-gray-300 bg-gray-100 text-gray-600 shadow-sm" disabled />
+            <label class="block text-sm font-medium text-gray-700 mb-1">Code</label>
+            <input value="{{ $equipment->code }}" class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 bg-gray-100 text-gray-600 shadow-sm" disabled />
             <p class="text-xs text-gray-500">Code is immutable.</p>
         </div>
         <div>
-            <label class="block text-sm font-medium text-gray-700">Name</label>
-            <input name="name" value="{{ old('name', $equipment->name) }}" class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+            <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+            <input name="name" value="{{ old('name', $equipment->name) }}" class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
         </div>
         <div>
-            <label class="block text-sm font-medium text-gray-700">Description (optional)</label>
-            <textarea name="description" rows="3" class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">{{ old('description', $equipment->description) }}</textarea>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Description (optional)</label>
+            <textarea name="description" rows="3" class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500">{{ old('description', $equipment->description) }}</textarea>
         </div>
         <div class="flex items-center gap-2">
             <a href="{{ route('equipments.index') }}" class="rounded border px-4 py-2">Cancel</a>
