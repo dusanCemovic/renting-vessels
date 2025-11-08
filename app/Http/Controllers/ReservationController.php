@@ -55,14 +55,17 @@ class ReservationController
         ]);
 
         // Treat incoming datetimes as Europe/Ljubljana (HTML datetime-local has no TZ)
-        $start = Carbon::parse($data['start_at'], 'Europe/Ljubljana');
-        $end = Carbon::parse($data['end_at'], 'Europe/Ljubljana');
+        $startLocal = Carbon::parse($data['start_at'], 'Europe/Ljubljana');
+        $endLocal = Carbon::parse($data['end_at'], 'Europe/Ljubljana');
+        // Normalize to UTC for storage and internal calculations
+        $start = $startLocal->copy()->setTimezone('UTC');
+        $end = $endLocal->copy()->setTimezone('UTC');
         $required = $data['required_equipment'] ?? [];
 
         // get only vessels with required equipment
         $vessels = VesselReservation::getVesselsWithEquipment($required);
 
-        // get available vessels in that period
+        // get available vessels in that period (working in UTC)
         $available = VesselReservation::checkAvailability($vessels, $start, $end);
 
         // if we have available vessels, then create task

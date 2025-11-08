@@ -19,6 +19,10 @@ final class VesselReservation
             });
     }
 
+    /**
+     * Determine which vessels are available for the given interval.
+     *
+     */
     public static function checkAvailability($vessels, $start, $end)
     {
         $available = array();
@@ -27,7 +31,7 @@ final class VesselReservation
             $conflictTasks = false;
             $conflictMaintenance = false;
 
-            // Check reservation conflicts
+            // Check reservation conflicts (all in UTC)
             foreach ($itemVessel->reservations as $res) {
                 if (
                     (($res->start_at >= $start && $res->start_at <= $end) ||
@@ -39,7 +43,7 @@ final class VesselReservation
                 }
             }
 
-            // Check maintenance conflicts
+            // Check maintenance conflicts (all in UTC)
             foreach ($itemVessel->maintenances as $mtn) {
                 if (
                     (($mtn->start_at >= $start && $mtn->start_at <= $end) ||
@@ -61,6 +65,10 @@ final class VesselReservation
         return $available;
     }
 
+    /**
+     * Suggest the earliest availability for each vessel after now.
+     *
+     */
     public static function getSuggestions($vessels, $start, $end)
     {
         $suggestions = [];
@@ -72,7 +80,6 @@ final class VesselReservation
             $now = Carbon::now();
 
             // collect all tasks and maintenances
-
             $busy = array();
 
             // reservations
@@ -103,7 +110,6 @@ final class VesselReservation
 
             $busy = array_values($busy);
 
-
             // find first slot where a [start,end] interval fits
             $tryStart = $start->copy();
 
@@ -116,7 +122,7 @@ final class VesselReservation
             foreach ($busy as $interval) {
                 // if we find before
                 if ($tryStart->copy()->lte($interval['start'])) {
-                    $tryEnd = $tryStart->copy()->addSeconds($end->diffInSeconds($start));
+                    $tryEnd = $tryStart->copy()->addSeconds(abs($end->diffInSeconds($start)));
                     if ($tryEnd->lte($interval['start'])) {
                         $found = $tryStart->copy();
                         break;
