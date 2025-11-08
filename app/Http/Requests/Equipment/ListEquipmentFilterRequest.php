@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Equipment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class VesselFilterRequest extends FormRequest
+/**
+ * Filters for listing vessels (sorting + direction).
+ */
+class ListEquipmentFilterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,8 +20,7 @@ class VesselFilterRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'type' => 'in:reservations,maintenance,both',
-            'sort' => 'in:vessel,start,end,type',
+            'sort' => 'in:name,code',
             'dir'  => 'in:asc,desc',
         ];
     }
@@ -27,18 +29,16 @@ class VesselFilterRequest extends FormRequest
     {
         // Normalize input before validation
         $this->merge([
-            'type' => strtolower($this->query('type', 'both')),
-            'sort' => strtolower($this->query('sort', 'start')),
+            'sort' => strtolower($this->query('sort', 'name')),
             'dir'  => strtolower($this->query('dir', 'asc')),
         ]);
     }
 
-    public function validatedFilters()
+    public function validatedFilters(): array
     {
         // Return normalized & validated values
         return [
-            'type' => $this->input('type', 'both'),
-            'sort' => $this->input('sort', 'start'),
+            'sort' => $this->input('sort', 'code'),
             'dir'  => $this->input('dir', 'asc'),
         ];
     }

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\VesselFilterRequest;
+use App\Http\Requests\VesselTaskFilterRequest;
 use App\Services\Repository;
 
 class MainController
 {
-    public function index(VesselFilterRequest $request) {
+    public function index(VesselTaskFilterRequest $request) {
 
         // cleared type, sort and dit
         $filters = $request->validatedFilters();

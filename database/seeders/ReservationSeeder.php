@@ -11,7 +11,6 @@ class ReservationSeeder extends Seeder
 {
     public function run(): void
     {
-        // DO NOT DELETE THOSE NEXT COMMENTS
         // Everything at the 10. day after now.
         // first plane reserved from 8h to 10h,  16h to 18h (once only A1, once A1, A2)
         // second plane reserved from 9h to 11h,  12h to 14h (once A2, one nothing)

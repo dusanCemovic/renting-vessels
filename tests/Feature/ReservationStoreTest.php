@@ -41,7 +41,7 @@ class ReservationStoreTest extends TestCase
         $response = $this->post(route('reservations.store'), $payload);
 
         $response->assertStatus(200)
-            ->assertViewIs('reserve.result')
+            ->assertViewIs('reservations.result')
             ->assertViewHas('success', true)
             ->assertViewHas('task');
 
@@ -85,7 +85,7 @@ class ReservationStoreTest extends TestCase
         $response = $this->post(route('reservations.store'), $payload);
 
         $response->assertStatus(200)
-            ->assertViewIs('reserve.result')
+            ->assertViewIs('reservations.result')
             ->assertViewHas('success', false)
             ->assertViewHas('suggestions');
 

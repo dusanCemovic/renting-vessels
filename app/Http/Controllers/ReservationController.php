@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\VesselFilterRequest;
+use App\Http\Requests\VesselTaskFilterRequest;
 use App\Models\Reservation;
 use App\Models\Vessel;
 use App\Services\Repository;
@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class ReservationController
 {
-    public function index(VesselFilterRequest $request) {
+    public function index(VesselTaskFilterRequest $request) {
         // cleared type, sort and dit
         $filters = $request->validatedFilters();
 

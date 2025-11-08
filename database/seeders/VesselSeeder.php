@@ -13,11 +13,11 @@ class VesselSeeder extends Seeder
         // Ensure equipment exists (seeded by EquipmentSeeder); fetch by code
         $equipmentByCode = Equipment::query()->pluck('id', 'code');
 
-        $v1 = Vessel::create(['name' => 'Jet 1', 'type' => 'jet', 'size' => 6]);
-        $v2 = Vessel::create(['name' => 'Jet 2', 'type' => 'prop', 'size' => 4]);
-        $v3 = Vessel::create(['name' => 'Jet 3', 'type' => 'prop', 'size' => 6]);
-        $v4 = Vessel::create(['name' => 'Jet 4', 'type' => 'jet', 'size' => 4]);
-        $v5 = Vessel::create(['name' => 'Jet 5', 'type' => 'prop', 'size' => 4]);
+        $v1 = Vessel::factory(['name' => 'Jet 1', 'type' => 'jet', 'size' => 6]);
+        $v2 = Vessel::factory(['name' => 'Jet 2', 'type' => 'prop', 'size' => 4]);
+        $v3 = Vessel::factory(['name' => 'Jet 3', 'type' => 'prop', 'size' => 6]);
+        $v4 = Vessel::factory(['name' => 'Jet 4', 'type' => 'jet', 'size' => 4]);
+        $v5 = Vessel::factory(['name' => 'Jet 5', 'type' => 'prop', 'size' => 4]);
 
         // Attach equipment using codes defined in EquipmentSeeder
         $map = fn(array $codes) => array_values(array_filter(array_map(fn($c) => $equipmentByCode[$c] ?? null, $codes)));

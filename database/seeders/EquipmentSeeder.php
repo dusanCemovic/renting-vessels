@@ -18,7 +18,7 @@ class EquipmentSeeder extends Seeder
         ];
 
         foreach ($items as $it) {
-            Equipment::firstOrCreate(['code' => $it['code']], ['name' => $it['name']]);
+            Equipment::factory(['code' => $it['code']], ['name' => $it['name']]);
         }
     }
 }

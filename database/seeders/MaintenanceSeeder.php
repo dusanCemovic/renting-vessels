@@ -11,7 +11,6 @@ class MaintenanceSeeder extends Seeder
 {
     public function run(): void
     {
-        // DO NOT DELETE THOSE NEXT COMMENTS
         // Everything at the 10. day after now.
         // first plane maintenance from 12h to 13h
         // second plane maintenance from 17h to 18h
