@@ -51,9 +51,7 @@
                 @foreach($vessels as $index => $vessel)
                     <tr class="hover:bg-gray-50">
                         <td class="px-4 py-2">{{ ($vessels->currentPage()-1)*$vessels->perPage() + $index + 1 }}</td>
-                        <td class="px-4 py-2">
-                            <a class="text-blue-600 hover:underline" href="{{ route('vessels.show', $vessel) }}">{{ $vessel->name }}</a>
-                        </td>
+                        <td class="px-4 py-2">{{ $vessel->name }}</td>
                         <td class="px-4 py-2">{{ $vessel->type }}</td>
                         <td class="px-4 py-2">{{ $vessel->size }}</td>
                         <td class="px-4 py-2">
@@ -64,6 +62,7 @@
                             @endif
                         </td>
                         <td class="px-4 py-2 flex gap-2">
+                            <a href="{{ route('vessels.show', $vessel) }}" class="text-black hover:underline">Reservations and Maintenance</a>
                             <a href="{{ route('vessels.edit', $vessel) }}" class="text-blue-600 hover:underline">Edit</a>
                             <form method="POST" action="{{ route('vessels.destroy', $vessel) }}" onsubmit="return confirm('Delete vessel {{ $vessel->name }}?');">
                                 @csrf

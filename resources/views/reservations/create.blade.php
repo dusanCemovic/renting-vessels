@@ -24,14 +24,14 @@
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
                 <label for="start_at" class="block text-sm font-medium text-gray-700 mb-1">Start</label>
-                <input id="start_at" type="datetime-local" name="start_at" step="900" min="{{ $minDateTime }}"
+                <input id="start_at" type="datetime-local" name="start_at" step="900"
                        class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                        value="{{ old('start_at', $suggestedStart) }}" required>
                 <p class="mt-1 text-xs text-gray-500">Pick a start date and time (15 min steps).</p>
             </div>
             <div>
                 <label for="end_at" class="block text-sm font-medium text-gray-700 mb-1">End</label>
-                <input id="end_at" type="datetime-local" name="end_at" step="900" min="{{ $minDateTime }}"
+                <input id="end_at" type="datetime-local" name="end_at" step="900"
                        class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                        value="{{ old('end_at', $suggestedEnd) }}" required>
                 <p class="mt-1 text-xs text-gray-500">End time must be after start time.</p>
