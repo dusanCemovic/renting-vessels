@@ -54,8 +54,9 @@ class ReservationController
             'required_equipment' => 'nullable|array',
         ]);
 
-        $start = Carbon::parse($data['start_at']);
-        $end = Carbon::parse($data['end_at']);
+        // Treat incoming datetimes as Europe/Ljubljana (HTML datetime-local has no TZ)
+        $start = Carbon::parse($data['start_at'], 'Europe/Ljubljana');
+        $end = Carbon::parse($data['end_at'], 'Europe/Ljubljana');
         $required = $data['required_equipment'] ?? [];
 
         // get only vessels with required equipment

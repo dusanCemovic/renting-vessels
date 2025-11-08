@@ -6,8 +6,8 @@
             Task <strong>{{ $task->title }}</strong> successfully reserved for vessel <strong>{{ $vessel->name }}</strong>.
         </div>
         <ul class="mt-4 list-disc pl-6 text-sm text-gray-700">
-            <li>Start: {{ \Carbon\Carbon::parse($task->start_at)->format('Y-m-d H:i') }}</li>
-            <li>End: {{ \Carbon\Carbon::parse($task->end_at)->format('Y-m-d H:i') }}</li>
+            <li>Start: @slDate($task->start_at)</li>
+            <li>End: @slDate($task->end_at)</li>
             <li>Required Equipment: {{ implode(', ', $task->required_equipment ?? []) }}</li>
         </ul>
     @else
@@ -17,7 +17,7 @@
         <h2 class="mt-6 font-semibold">Suggestions:</h2>
         <ul class="mt-2 list-disc pl-6 text-sm text-gray-700">
             @foreach($suggestions as $s)
-                <li>Vessel: {{ $s['vessel_name'] }} — Available from: {{ $s['available_from'] }}</li>
+                <li>Vessel: {{ $s['vessel_name'] }} — Available from: @slDate($s['available_from'])</li>
             @endforeach
         </ul>
     @endif

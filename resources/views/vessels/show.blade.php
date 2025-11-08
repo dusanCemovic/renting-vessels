@@ -23,8 +23,8 @@
                         <td class="px-4 py-2">{{ $index + 1 }}</td>
                         <td class="px-4 py-2">{{ $reservation->title }}</td>
                         <td class="px-4 py-2">{{ $reservation->description ?? '—' }}</td>
-                        <td class="px-4 py-2">{{ \Carbon\Carbon::parse($reservation->start_at)->format('Y-m-d H:i') }}</td>
-                        <td class="px-4 py-2">{{ \Carbon\Carbon::parse($reservation->end_at)->format('Y-m-d H:i') }}</td>
+                        <td class="px-4 py-2">@slDate($reservation->start_at)</td>
+                        <td class="px-4 py-2">@slDate($reservation->end_at)</td>
                     </tr>
                 @endforeach
                 </tbody>
