@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Equipment;
 use App\Models\Reservation;
 use App\Models\Vessel;
+use App\Services\Repository;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -75,8 +76,8 @@ class VesselCrudTest extends TestCase
         Reservation::create([
             'title' => 'R1',
             'vessel_id' => $vessel->id,
-            'start_at' => Carbon::parse('2025-01-02 10:00:00'),
-            'end_at' => Carbon::parse('2025-01-02 12:00:00'),
+            'start_at' => Repository::dateFromLocalToDB('2025-01-02 10:00:00'),
+            'end_at' => Repository::dateFromLocalToDB('2025-01-02 12:00:00'),
             'required_equipment' => [],
         ]);
 

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Equipment;
 use App\Models\Reservation;
 use App\Models\Vessel;
+use App\Services\Repository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -65,8 +66,8 @@ class ReservationVesselSixTest extends TestCase
         $this->assertDatabaseHas('reservations', [
             'vessel_id' => $v6->id,
             'title' => 'Night hop',
-            'start_at' => '2025-11-12 02:00:00',
-            'end_at' => '2025-11-12 03:00:00',
+            'start_at' => Repository::dateFromLocalToDB('2025-11-12 02:00:00', true),
+            'end_at' => Repository::dateFromLocalToDB('2025-11-12 03:00:00', true),
         ]);
 
         // Second attempt: same params; vessel #6 is now busy at that time, so only suggestion should be returned

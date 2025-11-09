@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Maintenance;
 use App\Models\Reservation;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 final class Repository
@@ -68,5 +69,24 @@ final class Repository
         };
 
         return $dir === 'asc' ? $tasks->sortBy($key)->values() : $tasks->sortByDesc($key)->values();
+    }
+
+    /**
+     * This can be used to leave always UTC in db but use local on front
+     *
+     * @param string $date
+     * @return Carbon|string
+     */
+    public static function dateFromLocalToDB(string $date, bool $withFormat = false, string $format = 'Y-m-d H:i:s')
+    {
+        $date = Carbon::parse($date, 'Europe/Ljubljana');
+        $dbPrepared = $date->copy()->setTimezone('UTC');
+
+        if ($withFormat) {
+            return $dbPrepared->format($format);
+        } else {
+            return $dbPrepared;
+        }
+
     }
 }

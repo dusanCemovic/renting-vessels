@@ -54,12 +54,8 @@ class ReservationController
             'required_equipment' => 'nullable|array',
         ]);
 
-        // Treat incoming datetimes as Europe/Ljubljana (HTML datetime-local has no TZ)
-        $startLocal = Carbon::parse($data['start_at'], 'Europe/Ljubljana');
-        $endLocal = Carbon::parse($data['end_at'], 'Europe/Ljubljana');
-        // Normalize to UTC for storage and internal calculations
-        $start = $startLocal->copy()->setTimezone('UTC');
-        $end = $endLocal->copy()->setTimezone('UTC');
+        $start = Repository::dateFromLocalToDB($data['start_at']);
+        $end = Repository::dateFromLocalToDB($data['end_at']);
         $required = $data['required_equipment'] ?? [];
 
         // get only vessels with required equipment

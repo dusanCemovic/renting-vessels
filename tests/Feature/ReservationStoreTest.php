@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Maintenance;
 use App\Models\Reservation;
 use App\Models\Vessel;
+use App\Services\Repository;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -22,11 +23,12 @@ class ReservationStoreTest extends TestCase
         $v1 = Vessel::factory()->create(['name' => 'Alpha', 'type' => 'TypeX', 'size' => 4]);
         $v2 = Vessel::factory()->create(['name' => 'Bravo', 'type' => 'TypeX', 'size' => 6]);
 
+
         Reservation::create([
             'title' => 'Busy Alpha',
             'vessel_id' => $v1->id,
-            'start_at' => Carbon::parse('2025-01-11 09:00:00'),
-            'end_at' => Carbon::parse('2025-01-11 12:00:00'),
+            'start_at' => Repository::dateFromLocalToDB('2025-01-11 09:00:00'),
+            'end_at' => Repository::dateFromLocalToDB('2025-01-11 12:00:00'),
             'required_equipment' => [],
         ]);
 
@@ -47,8 +49,8 @@ class ReservationStoreTest extends TestCase
 
         $this->assertDatabaseHas('reservations', [
             'title' => 'My Res',
-            'start_at' => '2025-01-11 13:00:00',
-            'end_at' => '2025-01-11 15:00:00',
+            'start_at' => Repository::dateFromLocalToDB('2025-01-11 13:00:00', true),
+            'end_at' => Repository::dateFromLocalToDB('2025-01-11 15:00:00', true),
         ]);
     }
 
@@ -63,15 +65,15 @@ class ReservationStoreTest extends TestCase
         Reservation::create([
             'title' => 'Busy Alpha',
             'vessel_id' => $v1->id,
-            'start_at' => Carbon::parse('2025-01-11 12:00:00'),
-            'end_at' => Carbon::parse('2025-01-11 18:00:00'),
+            'start_at' => Repository::dateFromLocalToDB('2025-01-11 12:00:00'),
+            'end_at' => Repository::dateFromLocalToDB('2025-01-11 18:00:00'),
             'required_equipment' => [],
         ]);
         Maintenance::create([
             'title' => 'Bravo Maint',
             'vessel_id' => $v2->id,
-            'start_at' => Carbon::parse('2025-01-11 10:00:00'),
-            'end_at' => Carbon::parse('2025-01-11 14:00:00'),
+            'start_at' => Repository::dateFromLocalToDB('2025-01-11 10:00:00'),
+            'end_at' => Repository::dateFromLocalToDB('2025-01-11 14:00:00'),
 
         ]);
 
@@ -103,13 +105,13 @@ class ReservationStoreTest extends TestCase
         foreach ($suggestions as $s) {
 
             if ($s['vessel_name'] === 'Alpha') {
-                $this->assertTrue(Carbon::parse($s['available_from'])->lte(Carbon::parse('2025-01-11 18:00:00')));
-                $this->assertFalse(Carbon::parse($s['available_from'])->lte(Carbon::parse('2025-01-11 15:00:00')));
+                $this->assertTrue(Carbon::parse($s['available_from'])->lte(Repository::dateFromLocalToDB('2025-01-11 18:00:00')));
+                $this->assertFalse(Carbon::parse($s['available_from'])->lte(Repository::dateFromLocalToDB('2025-01-11 15:00:00')));
             }
 
             if ($s['vessel_name'] === 'Bravo') {
-                $this->assertTrue(Carbon::parse($s['available_from'])->lte(Carbon::parse('2025-01-11 14:00:00')));
-                $this->assertFalse(Carbon::parse($s['available_from'])->lte(Carbon::parse('2025-01-11 13:00:00')));
+                $this->assertTrue(Carbon::parse($s['available_from'])->lte(Repository::dateFromLocalToDB('2025-01-11 14:00:00')));
+                $this->assertFalse(Carbon::parse($s['available_from'])->lte(Repository::dateFromLocalToDB('2025-01-11 13:00:00')));
             }
         }
 
@@ -118,7 +120,7 @@ class ReservationStoreTest extends TestCase
             [
                 'vessel_id' => $v2->id,
                 'vessel_name' => $v2->name,
-                'available_from' => Carbon::parse('2025-01-11 14:00:00')->toIso8601String(),
+                'available_from' => Repository::dateFromLocalToDB('2025-01-11 14:00:00')->toIso8601String(),
             ],
             $suggestions[0],
             ['vessel_id', 'vessel_name', 'available_from']
