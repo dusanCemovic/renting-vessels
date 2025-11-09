@@ -1,4 +1,4 @@
-# Laravel API Media store
+# Renting Vessels (Laravel project)
 
 Laravel application implementing:
 App for renting vessels based on equipment, and it needs to be free in that period (no maintenance or reservations)
