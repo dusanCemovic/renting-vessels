@@ -7,6 +7,10 @@
         </div>
     </div>
 
+    @if(session('status'))
+        <div class="mt-4 rounded border border-green-300 bg-green-50 text-green-800 px-4 py-3">{{ session('status') }}</div>
+    @endif
+
     <h2 class="mt-4 text-xl font-semibold">Reservations</h2>
     @if($vessel->reservations->isEmpty())
         <div class="mt-2 rounded border border-yellow-300 bg-yellow-50 text-yellow-800 px-4 py-3">No reservations found for this vessel.</div>

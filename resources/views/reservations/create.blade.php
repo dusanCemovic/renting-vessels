@@ -51,7 +51,6 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <button type="button" id="fill-now" class="rounded border px-3 py-2 text-sm">Start now + 2h</button>
             <button class="inline-flex items-center rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
                     type="submit">Reserve
             </button>
@@ -126,39 +125,6 @@
                         instance.input.value = iso;      // submit this
                         instance.altInput.value = human;  // show this
                     }
-                });
-            }
-
-            const fpStart = enhance(startInput);
-            const fpEnd = enhance(endInput);
-
-            // Start now + 2h button respecting Slovenia timezone
-            const btn = document.getElementById('fill-now');
-            if (btn) {
-                btn.addEventListener('click', function () {
-                    const now = new Date();
-                    // Round to next 15 minutes in Slovenia timezone by iterating forward
-                    // We'll step minutes until divisible by 15 in Slovenia parts
-                    let candidate = new Date(now.getTime());
-                    for (let i = 0; i < 60; i++) {
-                        const p = partsInSlovenia(candidate);
-                        const m = parseInt(p.minute, 10);
-                        if (m % 15 === 0) break;
-                        candidate.setMinutes(candidate.getMinutes() + 1);
-                    }
-                    candidate.setSeconds(0, 0);
-                    const end = new Date(candidate.getTime() + 2 * 60 * 60 * 1000);
-
-                    const startIso = toSloveniaISO(candidate);
-                    const endIso = toSloveniaISO(end);
-                    const startHuman = toSloveniaHuman(candidate);
-                    const endHuman = toSloveniaHuman(end);
-
-                    // Update inputs and alt displays
-                    startInput.value = startIso;
-                    endInput.value = endIso;
-                    if (fpStart) { fpStart.setDate(candidate, false); fpStart.altInput.value = startHuman; }
-                    if (fpEnd) { fpEnd.setDate(end, false); fpEnd.altInput.value = endHuman; }
                 });
             }
         })();
