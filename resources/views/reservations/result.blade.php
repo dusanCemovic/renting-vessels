@@ -12,7 +12,7 @@
         </ul>
     @else
         <div class="mt-4 rounded border border-yellow-300 bg-yellow-50 text-yellow-800 px-4 py-3">
-            No vessel available at requested time.
+            No vessel with that equipment is available at requested time.
         </div>
         <h2 class="mt-6 font-semibold">Suggestions:</h2>
         <ul class="mt-2 list-disc pl-6 text-sm text-gray-700">

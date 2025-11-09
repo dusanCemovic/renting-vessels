@@ -48,7 +48,7 @@ class ReservationTimezoneTest extends TestCase
         $response->assertStatus(200);
 
         // Since times are normalized to UTC in the controller, this should conflict and NOT be successful
-        $response->assertSee('No vessel available at requested time.');
+        $response->assertSee('No vessel with that equipment is available at requested time.');
 
         // Additionally, prove availability in UTC returns zero available vessels for that window
         $vesselReloaded = Vessel::with(['reservations', 'maintenances', 'equipment'])->findOrFail($vessel->id);
