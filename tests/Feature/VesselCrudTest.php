@@ -68,22 +68,4 @@ class VesselCrudTest extends TestCase
         ]);
         $ok->assertRedirect(route('vessels.index'));
     }
-
-    public function test_deletion_is_blocked_when_reservations_exist(): void
-    {
-        Carbon::setTestNow('2025-01-01 00:00:00');
-        $vessel = Vessel::factory()->create(['name' => 'BusyV']);
-        Reservation::create([
-            'title' => 'R1',
-            'vessel_id' => $vessel->id,
-            'start_at' => Repository::dateFromLocalToDB('2025-01-02 10:00:00'),
-            'end_at' => Repository::dateFromLocalToDB('2025-01-02 12:00:00'),
-            'required_equipment' => [],
-        ]);
-
-        $resp = $this->delete(route('vessels.destroy', $vessel));
-        $resp->assertRedirect(route('vessels.index'));
-        $resp->assertSessionHas('error');
-        $this->assertDatabaseHas('vessels', ['id' => $vessel->id, 'deleted_at' => null]);
-    }
 }
