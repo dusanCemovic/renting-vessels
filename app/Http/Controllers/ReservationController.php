@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VesselTaskFilterRequest;
+use App\Http\Requests\Reservation\StoreReservationRequest;
 use App\Models\Equipment;
 use App\Models\Reservation;
 use App\Models\Vessel;
 use App\Services\Repository;
 use App\Services\VesselReservation;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class ReservationController
 {
@@ -44,15 +44,9 @@ class ReservationController
         return view('reservations.create', compact('equipments'));
     }
 
-    public function store(Request $request)
+    public function store(StoreReservationRequest $request)
     {
-        // Validate input. This can be new classes extended from Request
-        $data = $request->validate([
-            'title' => 'required|string',
-            'start_at' => 'required|date',
-            'end_at' => 'required|date|after:start_at',
-            'required_equipment' => 'nullable|array',
-        ]);
+        $data = $request->validated();
 
         $start = Repository::dateFromLocalToDB($data['start_at']);
         $end = Repository::dateFromLocalToDB($data['end_at']);

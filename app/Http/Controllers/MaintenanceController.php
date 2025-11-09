@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VesselTaskFilterRequest;
+use App\Http\Requests\Maintenance\StoreMaintenanceRequest;
 use App\Models\Maintenance;
 use App\Models\Vessel;
 use App\Services\Repository;
 use App\Services\VesselReservation;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class MaintenanceController
@@ -45,14 +45,9 @@ class MaintenanceController
         ]);
     }
 
-    public function store(Request $request, Vessel $vessel)
+    public function store(StoreMaintenanceRequest $request, Vessel $vessel)
     {
-        $data = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'notes' => ['nullable', 'string'],
-            'start_at' => ['required', 'date'],
-            'end_at' => ['required', 'date', 'after:start_at'],
-        ]);
+        $data = $request->validated();
 
         $start = Repository::dateFromLocalToDB($data['start_at']);
         $end = Repository::dateFromLocalToDB($data['end_at']);

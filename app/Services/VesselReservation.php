@@ -23,47 +23,26 @@ final class VesselReservation
      * Determine which vessels are available for the given interval.
      *
      */
-    public static function checkAvailability($vessels, $start, $end)
+    public static function checkAvailability($vessels, $start, $end) : array
     {
         $available = array();
 
         foreach ($vessels as $itemVessel) {
-            $conflictTasks = false;
-            $conflictMaintenance = false;
 
-            // Check reservation conflicts (all in UTC)
-            foreach ($itemVessel->reservations as $res) {
-                // allow that new reservation/maintenance start when other is finished
-                if (
-                    (($res->start_at >= $start && $res->start_at <= $end) ||
-                        ($res->end_at > $start && $res->end_at <= $end)) ||
-                    ($res->start_at < $start && $res->end_at > $end)
-                ) {
-                    $conflictTasks = true;
-                    break;
-                }
+            if (! self::checkTerms($itemVessel?->reservations, $start, $end)) {
+                continue;
             }
 
-            // Check maintenance conflicts (all in UTC)
-            foreach ($itemVessel->maintenances as $mtn) {
-                if (
-                    (($mtn->start_at >= $start && $mtn->start_at <= $end) ||
-                        ($mtn->end_at > $start && $mtn->end_at <= $end)) ||
-
-                    ($mtn->start_at < $start && $mtn->end_at > $end)
-                ) {
-                    $conflictMaintenance = true;
-                    break;
-                }
+            if (! self::checkTerms($itemVessel?->maintenances, $start, $end)) {
+                continue;
             }
 
             // Add to available if no conflict
-            if (!$conflictTasks && !$conflictMaintenance) {
-                $available[] = $itemVessel;
-            }
+            $available[] = $itemVessel;
+
         }
 
-        return $available;
+        return self::orderPerPriority($available);
     }
 
     /**
@@ -149,5 +128,43 @@ final class VesselReservation
         });
 
         return $suggestions;
+    }
+
+    /**
+     * This funciton is used to check together maintenance and reservations
+     * @param mixed $terms
+     * @param $start
+     * @param $end
+     * @return bool
+     */
+    public static function checkTerms(mixed $terms, $start, $end)
+    {
+        // Check reservation conflicts
+        foreach ($terms as $term) {
+            // allow that new reservation/maintenance start when other is finished
+            if (
+                (($term->start_at >= $start && $term->start_at <= $end) ||
+                    ($term->end_at > $start && $term->end_at <= $end)) ||
+                ($term->start_at < $start && $term->end_at > $end)
+            ) {
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
+    /**
+     * Sort giving vessels per priority. Maybe it is better to give vessel with:
+     * as less equipment as possible (we will use this example)
+     * or smaller size
+     * etc
+     * @param array $possibilities
+     * @return array
+     */
+    public static function orderPerPriority(array $possibilities): array
+    {
+        return $possibilities;
     }
 }
