@@ -76,13 +76,6 @@ class VesselController
 
     public function destroy(Vessel $vessel): RedirectResponse
     {
-        // Block deletion if vessel has reservations or maintenances to preserve history integrity
-        $hasRelations = $vessel->reservations()->exists() || $vessel->maintenances()->exists();
-        if ($hasRelations) {
-            return redirect()->route('vessels.index')
-                ->with('error', "Cannot delete vessel {$vessel->name} because it has reservations or maintenances.");
-        }
-
         $vessel->delete(); // soft delete when safe
         return redirect()->route('vessels.index')
             ->with('status', "Vessel {$vessel->name} deleted.");

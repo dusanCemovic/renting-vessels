@@ -92,7 +92,13 @@
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-2">{{ $i + 1 }}</td>
                     <td class="px-4 py-2">{{ $task->title }}</td>
-                    <td class="px-4 py-2"><a class="text-blue-500" href="{{ url('vessels/' . $task->vessel_id )}}">{{ $task->vessel_name ?? '—' }}</a></td>
+                    <td class="px-4 py-2">
+                        @if ($task->vessel_name)
+                            <a class="text-blue-500" href="{{ url('vessels/' . $task->vessel_id )}}">{{ $task->vessel_name }}</a>
+                        @else
+                            /
+                        @endif
+                    </td>
                     <td class="px-4 py-2">@slDate($task->start_at)</td>
                     <td class="px-4 py-2">@slDate($task->end_at)</td>
                     @if($showTypeFilter)
