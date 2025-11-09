@@ -10,7 +10,6 @@ final class VesselReservation
 
     public static function getVesselsWithEquipment($required)
     {
-//        return Vessel::with(['equipment', 'reservations', 'maintenances'])
         return Vessel::with('equipment')
             ->get()
             ->filter(function ($ves) use ($required) {
@@ -29,11 +28,11 @@ final class VesselReservation
 
         foreach ($vessels as $itemVessel) {
 
-            if (! self::checkTerms($itemVessel?->reservations, $start, $end)) {
+            if (! self::checkTerms($itemVessel?->maintenances, $start, $end)) {
                 continue;
             }
 
-            if (! self::checkTerms($itemVessel?->maintenances, $start, $end)) {
+            if (! self::checkTerms($itemVessel?->reservations, $start, $end)) {
                 continue;
             }
 
