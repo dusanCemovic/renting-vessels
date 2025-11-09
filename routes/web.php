@@ -46,5 +46,7 @@ Route::prefix('reservations')->name('reservations.')->group(function () {
 Route::prefix('maintenances')->name('maintenances.')->group(function () {
     Route::get('/', [MaintenanceController::class, 'index'])->name('index');
     Route::get('/{maintenance}', [MaintenanceController::class, 'show'])->name('show');
+    Route::get('/add/{vessel}', [MaintenanceController::class, 'create'])->name('create');
+    Route::post('/add/{vessel}', [MaintenanceController::class, 'store'])->name('store');
 });
 

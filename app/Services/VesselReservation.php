@@ -33,9 +33,10 @@ final class VesselReservation
 
             // Check reservation conflicts (all in UTC)
             foreach ($itemVessel->reservations as $res) {
+                // allow that new reservation/maintenance start when other is finished
                 if (
                     (($res->start_at >= $start && $res->start_at <= $end) ||
-                        ($res->end_at >= $start && $res->end_at <= $end)) ||
+                        ($res->end_at > $start && $res->end_at <= $end)) ||
                     ($res->start_at < $start && $res->end_at > $end)
                 ) {
                     $conflictTasks = true;
@@ -47,7 +48,7 @@ final class VesselReservation
             foreach ($itemVessel->maintenances as $mtn) {
                 if (
                     (($mtn->start_at >= $start && $mtn->start_at <= $end) ||
-                        ($mtn->end_at >= $start && $mtn->end_at <= $end)) ||
+                        ($mtn->end_at > $start && $mtn->end_at <= $end)) ||
 
                     ($mtn->start_at < $start && $mtn->end_at > $end)
                 ) {

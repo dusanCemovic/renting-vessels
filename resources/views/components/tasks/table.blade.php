@@ -65,8 +65,22 @@
                     <a class="hover:underline"
                        href="{{ route($baseRoute, array_merge($q, ['sort' => 'vessel', 'dir' => $nextDir])) }}">Vessel</a>
                 </th>
-                <th class="px-4 py-2">Start</th>
-                <th class="px-4 py-2">End</th>
+                <th class="px-4 py-2">
+                    @php
+                        $q = request()->query();
+                        $nextDirStart = (($filters['sort'] ?? 'start') === 'start' && ($filters['dir'] ?? 'desc') === 'asc') ? 'desc' : 'asc';
+                    @endphp
+                    <a class="hover:underline"
+                       href="{{ route($baseRoute, array_merge($q, ['sort' => 'start', 'dir' => $nextDirStart])) }}">Start</a>
+                </th>
+                <th class="px-4 py-2">
+                    @php
+                        $q = request()->query();
+                        $nextDirEnd = (($filters['sort'] ?? 'start') === 'end' && ($filters['dir'] ?? 'desc') === 'asc') ? 'desc' : 'asc';
+                    @endphp
+                    <a class="hover:underline"
+                       href="{{ route($baseRoute, array_merge($q, ['sort' => 'end', 'dir' => $nextDirEnd])) }}">End</a>
+                </th>
                 @if($showTypeFilter)
                     <th class="px-4 py-2">Type</th>
                 @endif

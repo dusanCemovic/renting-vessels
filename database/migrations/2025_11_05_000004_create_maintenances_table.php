@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('vessel_id')->constrained('vessels');
             $table->string('title');
+            $table->text('notes')->default('');
             $table->timestamp('start_at');
             $table->timestamp('end_at');
             $table->timestamps();
