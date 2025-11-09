@@ -127,6 +127,9 @@
                     }
                 });
             }
+
+            const fpStart = enhance(startInput);
+            const fpEnd = enhance(endInput);
         })();
     </script>
 </x-layout>
