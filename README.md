@@ -94,8 +94,10 @@ App for renting vessels based on equipment, and it needs to be free in that peri
 
 ## Notes
 
-- Assumption is that we have more maintenances than reservations, so we first check maintenance for specific period. If we found one then we stop searching.
-- If algorithm send back more then one free vessel, then we are reserving the one with at least possible additional equipments then user from form marked as required.
-- Indexing for sorting vessels is added, so that function will be much faster. This possibilities can be done for other tables.
-- Possible adding is that we may check reservations and maintenance not all records at the same time, but in batches of time. E.g. Only same day what user wanted. If not then try second iteration with two next days and so on.
-
+- (Optimization) Assumption is that we have more maintenances than reservations, so we first check maintenance for specific period. If we found one then we stop searching.
+- (Optimization) If algorithm send back more then one free vessel, then we are reserving the one with at least possible additional equipments then user from form marked as required.
+- (Optimization) Indexing for sorting vessels is added, so that function will be much faster. This possibilities can be done for other tables.
+- (Optimization) Possible adding is that we may check reservations and maintenance not all records at the same time, but in batches of time. E.g. Only same day what user wanted. If not then try second iteration with two next days and so on.
+- Possible adding is to allow specific user to be able to handle adding maintenance, vessels and equipment records.
+  - We can use middlewares for authentication and authorization (e.g. only managers), policies and gates. Then use @gate to show specific buttons on view.
+- Views are just simple with mainly created with AI. It is used library for dates. 
